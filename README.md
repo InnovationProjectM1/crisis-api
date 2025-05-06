@@ -40,6 +40,10 @@ $ npm run lint
 $ npm run lint:fix
 ```
 
+## Contributing
+
+Please read [CONTRIBUTING.md](https://github.com/InnovationProjectM1/crisis-web/blob/master/CONTRIBUTING.md), based on crisis-web component, that covers the whole project.
+
 ## License
 
 [MIT licensed](https://github.com/InnovationProjectM1/crisis-api/blob/master/CONTRIBUTING.md).
