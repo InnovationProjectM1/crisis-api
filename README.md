@@ -1,6 +1,6 @@
 # crisis-api
 
-Backend component of CRISIS Project
+Backend component of CRISIS Project.
 
 ## Project setup
 
