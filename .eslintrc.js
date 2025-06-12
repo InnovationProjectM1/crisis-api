@@ -25,4 +25,12 @@ module.exports = {
     ],
     '@typescript-eslint/no-inferrable-types': 'error',
   },
+  overrides: [
+    {
+      files: ['**/*.test.ts', '**/*.spec.ts'],
+      rules: {
+        '@typescript-eslint/explicit-function-return-type': 'off',
+      },
+    },
+  ],
 };
