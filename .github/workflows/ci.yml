@@ -32,14 +32,3 @@ jobs:
 
       - name: Test
         run: npm run test
-
-      - name: Quality
-        continue-on-error: true
-        uses: SonarSource/sonarqube-scan-action@v5.2.0
-        with:
-          projectBaseDir: .
-          args: >
-            -Dsonar.pullrequest.github.summary_comment=false
-            -Dsonar.pullrequest.disable=true
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
