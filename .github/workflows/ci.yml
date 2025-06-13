@@ -13,22 +13,22 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-      - name: Checkout code
+      - name: 📥 Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up environment
+      - name: 🛠️ Set up environment
         uses: actions/setup-node@v4
         with:
           node-version: '22'
 
-      - name: Dependencies
+      - name: 📦 Dependencies
         run: npm ci
 
-      - name: Build
+      - name: 🏗️ Build
         run: npm run build
 
-      - name: Format Verification
+      - name: 🧹 Format Verification
         run: npm run lint && npm run prettier
 
-      - name: Test
+      - name: 🧪 Test
         run: npm run test
