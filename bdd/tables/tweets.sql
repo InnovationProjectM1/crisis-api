@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS crisis.tweets (
+    tweet_id NUMERIC NOT NULL PRIMARY KEY,
+    tweet_text VARCHAR(256) NOT NULL,
+    timestamp TIMESTAMP DEFAULT '1970-01-01 00:00:00' NOT NULL
+);
