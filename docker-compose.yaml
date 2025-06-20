@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: crisis_postgres
+    environment:
+      POSTGRES_USER: crisis_user
+      POSTGRES_PASSWORD: crisis_password
+      POSTGRES_DB: crisis_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - crisis_postgres:/var/lib/postgresql/data
+
+volumes:
+  crisis_postgres: {}
