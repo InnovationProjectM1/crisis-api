@@ -8,31 +8,32 @@ import {
   Delete,
   NotFoundException,
 } from '@nestjs/common';
-import { TweetService } from './tweet.service';
+import { Statistics, TweetService } from './tweet.service';
 import { CreateTweetDto } from './dto/create-tweet.dto';
 import { UpdateTweetDto } from './dto/update-tweet.dto';
+import { Tweet } from './tweet.entity';
 
 @Controller('tweets')
 export class TweetController {
   constructor(private readonly tweetService: TweetService) {}
 
   @Post()
-  create(@Body() createTweetDto: CreateTweetDto) {
+  create(@Body() createTweetDto: CreateTweetDto): Promise<Tweet> {
     return this.tweetService.create(createTweetDto);
   }
 
   @Get()
-  findAll() {
+  findAll(): Promise<Tweet[]> {
     return this.tweetService.findAll();
   }
 
   @Get('statistics')
-  getStatistics() {
+  getStatistics(): Promise<Statistics> {
     return this.tweetService.getStatistics();
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string): Promise<Tweet> {
     const tweet = await this.tweetService.findOne(+id);
     if (!tweet) {
       throw new NotFoundException(`Tweet with ID ${id} not found`);
@@ -41,7 +42,7 @@ export class TweetController {
   }
 
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateTweetDto: UpdateTweetDto) {
+  async update(@Param('id') id: string, @Body() updateTweetDto: UpdateTweetDto): Promise<Tweet> {
     const tweet = await this.tweetService.update(+id, updateTweetDto);
     if (!tweet) {
       throw new NotFoundException(`Tweet with ID ${id} not found`);
@@ -50,7 +51,7 @@ export class TweetController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: string): Promise<void> {
     return this.tweetService.remove(+id);
   }
 }

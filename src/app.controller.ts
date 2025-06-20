@@ -1,6 +1,12 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
 
+interface HealthCheckResponse {
+  status: string;
+  timestamp: string;
+  service: string;
+}
+
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
@@ -11,7 +17,7 @@ export class AppController {
   }
 
   @Get('health')
-  getHealthCheck() {
+  getHealthCheck(): HealthCheckResponse {
     return {
       status: 'ok',
       timestamp: new Date().toISOString(),

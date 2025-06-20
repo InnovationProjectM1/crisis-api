@@ -12,6 +12,9 @@ export class Tweet {
   @Column({ type: 'timestamp', default: '1970-01-01 00:00:00' })
   timestamp: Date;
 
-  @OneToOne(() => Classifier, classifier => classifier.tweet)
+  @OneToOne(
+    (): typeof Classifier => Classifier,
+    (classifier: Classifier): Tweet => classifier.tweet,
+  )
   classifier: Classifier;
 }

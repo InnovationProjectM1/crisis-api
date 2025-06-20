@@ -15,7 +15,7 @@ export class Classifier {
   @Column({ type: 'varchar', length: 50 })
   difficulty: string;
 
-  @OneToOne(() => Tweet, tweet => tweet.classifier)
+  @OneToOne((): typeof Tweet => Tweet, (tweet: Tweet): Classifier => tweet.classifier)
   @JoinColumn({ name: 'tweet_id' })
   tweet: Tweet;
 }

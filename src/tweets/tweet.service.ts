@@ -5,6 +5,12 @@ import { Tweet } from './tweet.entity';
 import { CreateTweetDto } from './dto/create-tweet.dto';
 import { UpdateTweetDto } from './dto/update-tweet.dto';
 
+export interface Statistics {
+  total: number;
+  classified: number;
+  unclassified: number;
+}
+
 @Injectable()
 export class TweetService {
   constructor(
@@ -37,7 +43,7 @@ export class TweetService {
     await this.tweetRepository.delete({ tweet_id: id });
   }
 
-  async getStatistics() {
+  async getStatistics(): Promise<Statistics> {
     const total = await this.tweetRepository.count();
     const classified = await this.tweetRepository
       .createQueryBuilder('tweet')

@@ -5,6 +5,16 @@ import { Classifier } from './classifier.entity';
 import { CreateClassifierDto } from './dto/create-classifier.dto';
 import { UpdateClassifierDto } from './dto/update-classifier.dto';
 
+export interface GroupStatistics {
+  group: string;
+  count: number;
+}
+
+export interface DifficultyStatistics {
+  difficulty: string;
+  count: number;
+}
+
 @Injectable()
 export class ClassifierService {
   constructor(
@@ -42,25 +52,21 @@ export class ClassifierService {
     await this.classifierRepository.delete({ tweet_id: tweetId });
   }
 
-  async getGroupStatistics() {
-    const groupStats = await this.classifierRepository
+  async getGroupStatistics(): Promise<GroupStatistics[]> {
+    return await this.classifierRepository
       .createQueryBuilder('classifier')
       .select('classifier.classified_group', 'group')
       .addSelect('COUNT(*)', 'count')
       .groupBy('classifier.classified_group')
       .getRawMany();
-
-    return groupStats;
   }
 
-  async getDifficultyStatistics() {
-    const difficultyStats = await this.classifierRepository
+  async getDifficultyStatistics(): Promise<DifficultyStatistics[]> {
+    return await this.classifierRepository
       .createQueryBuilder('classifier')
       .select('classifier.difficulty', 'difficulty')
       .addSelect('COUNT(*)', 'count')
       .groupBy('classifier.difficulty')
       .getRawMany();
-
-    return difficultyStats;
   }
 }

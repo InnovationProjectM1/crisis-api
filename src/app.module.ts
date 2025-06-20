@@ -1,12 +1,13 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TweetModule } from './tweets/tweet.module';
 import { ClassifierModule } from './classifier/classifier.module';
 import { Tweet } from './tweets/tweet.entity';
 import { Classifier } from './classifier/classifier.entity';
+import { DatabaseInitService } from './bdd/database-init.service';
 
 @Module({
   imports: [
@@ -15,7 +16,7 @@ import { Classifier } from './classifier/classifier.entity';
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: (configService: ConfigService) => ({
+      useFactory: (configService: ConfigService): TypeOrmModuleOptions => ({
         type: 'postgres',
         host: configService.get('DATABASE_HOST'),
         port: parseInt(configService.get('DATABASE_PORT') || '5432'),
@@ -24,7 +25,7 @@ import { Classifier } from './classifier/classifier.entity';
         database: configService.get('DATABASE_NAME'),
         schema: configService.get('DATABASE_SCHEMA') || 'public',
         entities: [Tweet, Classifier],
-        synchronize: false, // Désactivé pour éviter les conflits avec les tables existantes
+        synchronize: false,
         logging: configService.get('NODE_ENV') === 'development',
       }),
       inject: [ConfigService],
@@ -33,6 +34,6 @@ import { Classifier } from './classifier/classifier.entity';
     ClassifierModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, DatabaseInitService],
 })
 export class AppModule {}
