@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  NotFoundException,
+} from '@nestjs/common';
 import { ClassifierService } from './classifier.service';
 import { CreateClassifierDto } from './dto/create-classifier.dto';
 import { UpdateClassifierDto } from './dto/update-classifier.dto';
@@ -37,7 +46,10 @@ export class ClassifierController {
   }
 
   @Patch(':tweetId')
-  async update(@Param('tweetId') tweetId: string, @Body() updateClassifierDto: UpdateClassifierDto) {
+  async update(
+    @Param('tweetId') tweetId: string,
+    @Body() updateClassifierDto: UpdateClassifierDto,
+  ) {
     const classifier = await this.classifierService.update(+tweetId, updateClassifierDto);
     if (!classifier) {
       throw new NotFoundException(`Classifier for tweet ID ${tweetId} not found`);

@@ -27,7 +27,8 @@ export class TweetService {
       where: { tweet_id: id },
       relations: ['classifier'],
     });
-  }  async update(id: number, updateTweetDto: UpdateTweetDto): Promise<Tweet | null> {
+  }
+  async update(id: number, updateTweetDto: UpdateTweetDto): Promise<Tweet | null> {
     await this.tweetRepository.update({ tweet_id: id }, updateTweetDto);
     return this.findOne(id);
   }

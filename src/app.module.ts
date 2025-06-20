@@ -14,7 +14,8 @@ import { Classifier } from './classifier/classifier.entity';
       isGlobal: true,
     }),
     TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],      useFactory: (configService: ConfigService) => ({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
         type: 'postgres',
         host: configService.get('DATABASE_HOST'),
         port: parseInt(configService.get('DATABASE_PORT') || '5432'),
@@ -27,7 +28,8 @@ import { Classifier } from './classifier/classifier.entity';
         logging: configService.get('NODE_ENV') === 'development',
       }),
       inject: [ConfigService],
-    }),    TweetModule,
+    }),
+    TweetModule,
     ClassifierModule,
   ],
   controllers: [AppController],

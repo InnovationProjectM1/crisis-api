@@ -30,7 +30,10 @@ export class ClassifierService {
     });
   }
 
-  async update(tweetId: number, updateClassifierDto: UpdateClassifierDto): Promise<Classifier | null> {
+  async update(
+    tweetId: number,
+    updateClassifierDto: UpdateClassifierDto,
+  ): Promise<Classifier | null> {
     await this.classifierRepository.update({ tweet_id: tweetId }, updateClassifierDto);
     return this.findOne(tweetId);
   }
