@@ -16,5 +16,5 @@ export class Tweet {
     (): typeof Classifier => Classifier,
     (classifier: Classifier): Tweet => classifier.tweet,
   )
-  classifier: Classifier;
+  classifier?: Classifier;
 }
