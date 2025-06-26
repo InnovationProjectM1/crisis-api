@@ -28,18 +28,18 @@ export class TweetService {
       relations: ['classifier'],
     });
   }
-  async findOne(id: number): Promise<Tweet | null> {
+  async findOne(id: string): Promise<Tweet | null> {
     return await this.tweetRepository.findOne({
       where: { tweet_id: id },
       relations: ['classifier'],
     });
   }
-  async update(id: number, updateTweetDto: UpdateTweetDto): Promise<Tweet | null> {
+  async update(id: string, updateTweetDto: UpdateTweetDto): Promise<Tweet | null> {
     await this.tweetRepository.update({ tweet_id: id }, updateTweetDto);
     return this.findOne(id);
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: string): Promise<void> {
     await this.tweetRepository.delete({ tweet_id: id });
   }
 

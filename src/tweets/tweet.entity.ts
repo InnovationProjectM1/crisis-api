@@ -4,7 +4,7 @@ import { Classifier } from '../classifier/classifier.entity';
 @Entity({ schema: 'crisis', name: 'tweets' })
 export class Tweet {
   @PrimaryColumn({ type: 'numeric' })
-  tweet_id: number;
+  tweet_id: string;
 
   @Column({ type: 'varchar', length: 256 })
   tweet_text: string;

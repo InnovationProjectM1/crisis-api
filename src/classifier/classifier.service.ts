@@ -33,7 +33,7 @@ export class ClassifierService {
     });
   }
 
-  async findOne(tweetId: number): Promise<Classifier | null> {
+  async findOne(tweetId: string): Promise<Classifier | null> {
     return await this.classifierRepository.findOne({
       where: { tweet_id: tweetId },
       relations: ['tweet'],
@@ -41,14 +41,14 @@ export class ClassifierService {
   }
 
   async update(
-    tweetId: number,
+    tweetId: string,
     updateClassifierDto: UpdateClassifierDto,
   ): Promise<Classifier | null> {
     await this.classifierRepository.update({ tweet_id: tweetId }, updateClassifierDto);
     return this.findOne(tweetId);
   }
 
-  async remove(tweetId: number): Promise<void> {
+  async remove(tweetId: string): Promise<void> {
     await this.classifierRepository.delete({ tweet_id: tweetId });
   }
 
