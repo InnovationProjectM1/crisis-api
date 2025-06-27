@@ -40,9 +40,10 @@ export class DatabaseInitService implements OnModuleInit {
       this.logger.log(`Executed SQL file: ${file}`);
     }
 
-    this.logger.log(`All SQL files executed successfully.`);
-
     await this.insertDataset();
+
+    this.logger.log(`All SQL files executed successfully.`);
+     
   }
 
   private async insertDataset(): Promise<void> {
