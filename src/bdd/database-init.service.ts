@@ -43,14 +43,13 @@ export class DatabaseInitService implements OnModuleInit {
     await this.insertDataset();
 
     this.logger.log(`All SQL files executed successfully.`);
-     
   }
 
   private async insertDataset(): Promise<void> {
     const datasetChoice = process.env.DATASET_CHOICE || '1';
-    
+
     this.logger.log(`Using dataset ${datasetChoice}`);
-    
+
     if (datasetChoice === '1') {
       await this.insertDataset1();
     } else if (datasetChoice === '2') {
@@ -64,28 +63,28 @@ export class DatabaseInitService implements OnModuleInit {
     const csvPath = join(__dirname, 'datasets', 'dataset1.csv');
     const csvContent = readFileSync(csvPath, 'utf8');
     const lines = csvContent.split('\n').slice(1); // Skip header
-    
+
     this.logger.log(`Inserting ${lines.length - 1} tweets from dataset1...`);
-    
+
     for (const line of lines) {
       if (line.trim() === '') continue;
-      
+
       const row = this.parseCSVLine(line);
       if (row.length >= 4) {
         const tweetId = row[2];
-        const tweetText = row[3].replace(/'/g, "''"); 
-        
+        const tweetText = row[3].replace(/'/g, "''");
+
         try {
           await this.dataSource.query(
             `INSERT INTO crisis.tweets (tweet_id, tweet_text) VALUES ($1, $2) ON CONFLICT (tweet_id) DO NOTHING`,
-            [tweetId, tweetText]
+            [tweetId, tweetText],
           );
         } catch (error) {
           this.logger.error(`Error inserting tweet ${tweetId}: ${error.message}`);
         }
       }
     }
-    
+
     this.logger.log(`Dataset1 insertion completed.`);
   }
 
@@ -93,36 +92,36 @@ export class DatabaseInitService implements OnModuleInit {
     const csvPath = join(__dirname, 'datasets', 'dataset2.csv');
     const csvContent = readFileSync(csvPath, 'utf8');
     const lines = csvContent.split('\n').slice(1); // Skip header
-    
+
     this.logger.log(`Inserting ${lines.length - 1} tweets and classifications from dataset2...`);
-    
+
     for (const line of lines) {
       if (line.trim() === '') continue;
-      
+
       const row = this.parseCSVLine(line);
       if (row.length >= 4) {
         const tweetId = row[1];
         const tweetText = row[2].replace(/'/g, "''"); // Escape single quotes
         const tweetClass = row[3];
-        
+
         try {
           // Insert tweet
           await this.dataSource.query(
             `INSERT INTO crisis.tweets (tweet_id, tweet_text) VALUES ($1, $2) ON CONFLICT (tweet_id) DO NOTHING`,
-            [tweetId, tweetText]
+            [tweetId, tweetText],
           );
-          
+
           // Insert classifier
           await this.dataSource.query(
             `INSERT INTO crisis.classifier (tweet_id, classified_group, classified_sub_group, difficulty) VALUES ($1, $2, $3, $4) ON CONFLICT (tweet_id) DO NOTHING`,
-            [tweetId, 'request', tweetClass, '3']
+            [tweetId, 'request', tweetClass, '3'],
           );
         } catch (error) {
           this.logger.error(`Error inserting tweet/classification ${tweetId}: ${error.message}`);
         }
       }
     }
-    
+
     this.logger.log(`Dataset2 insertion completed.`);
   }
 
@@ -130,10 +129,10 @@ export class DatabaseInitService implements OnModuleInit {
     const result: string[] = [];
     let current = '';
     let inQuotes = false;
-    
+
     for (let i = 0; i < line.length; i++) {
       const char = line[i];
-      
+
       if (char === '"') {
         if (inQuotes && line[i + 1] === '"') {
           current += '"';
@@ -148,7 +147,7 @@ export class DatabaseInitService implements OnModuleInit {
         current += char;
       }
     }
-    
+
     result.push(current.trim());
     return result;
   }
