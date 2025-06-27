@@ -19,8 +19,16 @@ async function bootstrap(): Promise<void> {
 
   // Enable CORS for frontend communication
   app.enableCors({
-    origin: true,
+    origin: [
+      'https://crisis.maxlamenace.duckdns.org',
+      'http://localhost:3000',
+      'http://localhost:3001',
+      'https://localhost:3000',
+      'https://localhost:3001',
+    ],
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With'],
   });
 
   // Enable global validation
