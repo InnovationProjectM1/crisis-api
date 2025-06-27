@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "build": "nest build",
-    "postbuild": "cpx \"src/**/*.sql\" dist",
+    "postbuild": "cpx \"src/**/*.sql\" dist && cpx \"src/**/**/*.csv\" dist",
     "format": "prettier --write \"src/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
