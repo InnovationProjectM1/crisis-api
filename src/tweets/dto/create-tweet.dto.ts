@@ -1,13 +1,10 @@
-import { IsNotEmpty, IsString, IsNumber, IsOptional, IsDateString } from 'class-validator';
+import { IsNotEmpty, IsString, IsOptional, IsDateString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateTweetDto {
   @IsNotEmpty({ message: 'Tweet ID must not be empty' })
-  @IsNumber(
-    { allowNaN: false, allowInfinity: false },
-    { message: 'Tweet ID must be a valid number' },
-  )
-  @ApiProperty({ example: 1234567890, description: 'Unique Tweet ID' })
+  @IsString({ message: 'Tweet ID must be a string' })
+  @ApiProperty({ example: '1234567890', description: 'Unique Tweet ID' })
   tweet_id: string;
 
   @IsString({ message: 'Tweet value must be a string' })
