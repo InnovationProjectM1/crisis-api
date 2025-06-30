@@ -1,13 +1,10 @@
-import { IsNotEmpty, IsString, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateClassifierDto {
   @IsNotEmpty({ message: 'Tweet ID is required' })
-  @IsNumber(
-    { allowNaN: false, allowInfinity: false },
-    { message: 'Tweet ID must be a valid number' },
-  )
-  @ApiProperty({ example: 1234567890, description: 'Associated Tweet ID' })
+  @IsString({ message: 'Tweet ID must be a string' })
+  @ApiProperty({ example: '1234567890', description: 'Associated Tweet ID' })
   tweet_id: string;
 
   @IsNotEmpty({ message: 'Classified group is required' })
@@ -22,6 +19,6 @@ export class CreateClassifierDto {
 
   @IsNotEmpty({ message: 'Difficulty level is required' })
   @IsString({ message: 'Difficulty must be a string' })
-  @ApiProperty({ example: 'High', description: 'Classification difficulty level' })
+  @ApiProperty({ example: '1', description: 'Classification difficulty level (1 - 5)' })
   difficulty: string;
 }

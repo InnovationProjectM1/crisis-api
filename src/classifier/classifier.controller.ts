@@ -29,6 +29,16 @@ export class ClassifierController {
     return this.classifierService.create(createClassifierDto);
   }
 
+  @Post('multiple')
+  @ApiOperation({ summary: 'Create multiple classifiers for tweets' })
+  @ApiResponse({ status: 201, description: 'The classifiers have been successfully created.' })
+  @ApiResponse({ status: 400, description: 'Invalid input data.' })
+  @ApiResponse({ status: 404, description: 'One or more tweets not found.' })
+  @ApiBody({ type: [CreateClassifierDto] })
+  createMultiple(@Body() createClassifierDtos: CreateClassifierDto[]): Promise<Classifier[]> {
+    return this.classifierService.createMultiple(createClassifierDtos);
+  }
+
   @Get()
   @ApiOperation({ summary: 'Retrieve all classifiers' })
   @ApiResponse({ status: 200, description: 'List of all classifiers.' })
