@@ -19,6 +19,6 @@ export class CreateClassifierDto {
 
   @IsNotEmpty({ message: 'Difficulty level is required' })
   @IsString({ message: 'Difficulty must be a string' })
-  @ApiProperty({ example: 'High', description: 'Classification difficulty level' })
+  @ApiProperty({ example: '1', description: 'Classification difficulty level (1 - 5)' })
   difficulty: string;
 }
