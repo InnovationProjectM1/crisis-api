@@ -8,7 +8,6 @@ import {
   Delete,
   NotFoundException,
   HttpCode,
-  ValidationPipe,
 } from '@nestjs/common';
 import { ClassifierService, DifficultyStatistics, GroupStatistics } from './classifier.service';
 import { CreateClassifierDto } from './dto/create-classifier.dto';
@@ -36,10 +35,7 @@ export class ClassifierController {
   @ApiResponse({ status: 400, description: 'Invalid input data.' })
   @ApiResponse({ status: 404, description: 'One or more tweets not found.' })
   @ApiBody({ type: [CreateClassifierDto] })
-  createMultiple(
-    @Body(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
-    createClassifierDtos: CreateClassifierDto[],
-  ): Promise<Classifier[]> {
+  createMultiple(@Body() createClassifierDtos: CreateClassifierDto[]): Promise<Classifier[]> {
     return this.classifierService.createMultiple(createClassifierDtos);
   }
 
