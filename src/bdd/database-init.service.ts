@@ -113,7 +113,7 @@ export class DatabaseInitService implements OnModuleInit {
 
           // Insert classifier
           await this.dataSource.query(
-            `INSERT INTO crisis.classifier (tweet_id, classified_group, classified_sub_group, difficulty) VALUES ($1, $2, $3, $4) ON CONFLICT (tweet_id) DO NOTHING`,
+            `INSERT INTO crisis.classifier (tweet_id, classified_group, classified_sub_group, severity) VALUES ($1, $2, $3, $4) ON CONFLICT (tweet_id) DO NOTHING`,
             [tweetId, 'request', tweetClass, '3'],
           );
         } catch (error) {

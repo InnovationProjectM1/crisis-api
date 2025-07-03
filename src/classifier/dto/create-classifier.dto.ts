@@ -17,8 +17,8 @@ export class CreateClassifierDto {
   @ApiProperty({ example: 'Food', description: 'Sub-group of the classified group' })
   classified_sub_group: string;
 
-  @IsNotEmpty({ message: 'Difficulty level is required' })
-  @IsString({ message: 'Difficulty must be a string' })
-  @ApiProperty({ example: '1', description: 'Classification difficulty level (1 - 5)' })
-  difficulty: string;
+  @IsNotEmpty({ message: 'Severity level is required' })
+  @IsString({ message: 'Severity must be a string' })
+  @ApiProperty({ example: '1', description: 'Classification severity level (1 - 5)' })
+  severity: string;
 }
