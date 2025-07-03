@@ -13,7 +13,7 @@ export class Classifier {
   classified_sub_group: string;
 
   @Column({ type: 'varchar', length: 50 })
-  difficulty: string;
+  severity: string;
 
   @OneToOne((): typeof Tweet => Tweet, (tweet: Tweet): Classifier | undefined => tweet.classifier)
   @JoinColumn({ name: 'tweet_id' })

@@ -9,7 +9,7 @@ import {
   NotFoundException,
   HttpCode,
 } from '@nestjs/common';
-import { ClassifierService, DifficultyStatistics, GroupStatistics } from './classifier.service';
+import { ClassifierService, SeverityStatistics, GroupStatistics } from './classifier.service';
 import { CreateClassifierDto } from './dto/create-classifier.dto';
 import { UpdateClassifierDto } from './dto/update-classifier.dto';
 import { Classifier } from './classifier.entity';
@@ -54,11 +54,11 @@ export class ClassifierController {
     return this.classifierService.getGroupStatistics();
   }
 
-  @Get('statistics/difficulty')
-  @ApiOperation({ summary: 'Retrieve statistics about classification difficulty' })
-  @ApiResponse({ status: 200, description: 'Statistics about classification difficulty.' })
-  getDifficultyStatistics(): Promise<DifficultyStatistics[]> {
-    return this.classifierService.getDifficultyStatistics();
+  @Get('statistics/severity')
+  @ApiOperation({ summary: 'Retrieve statistics about classification severity' })
+  @ApiResponse({ status: 200, description: 'Statistics about classification severity.' })
+  getSeverityStatistics(): Promise<SeverityStatistics[]> {
+    return this.classifierService.getSeverityStatistics();
   }
 
   @Get(':tweetId')

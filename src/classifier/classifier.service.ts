@@ -10,8 +10,8 @@ export interface GroupStatistics {
   count: number;
 }
 
-export interface DifficultyStatistics {
-  difficulty: string;
+export interface SeverityStatistics {
+  severity: string;
   count: number;
 }
 
@@ -31,7 +31,7 @@ export class ClassifierService {
     // Check all members present in the classifier
     const missingClassifiedGroup: CreateClassifierDto[] = [];
     const missingClassifiedSubGroup: CreateClassifierDto[] = [];
-    const missingDifficulty: CreateClassifierDto[] = [];
+    const missingSeverity: CreateClassifierDto[] = [];
 
     createClassifierDtos.forEach((dto: CreateClassifierDto): void => {
       if (!dto.tweet_id) {
@@ -45,8 +45,8 @@ export class ClassifierService {
       if (!dto.classified_sub_group) {
         missingClassifiedSubGroup.push(dto);
       }
-      if (!dto.difficulty) {
-        missingDifficulty.push(dto);
+      if (!dto.severity) {
+        missingSeverity.push(dto);
       }
     });
 
@@ -64,9 +64,9 @@ export class ClassifierService {
       );
     }
 
-    if (missingDifficulty.length > 0) {
+    if (missingSeverity.length > 0) {
       throw new BadRequestException(
-        'Missing difficulty in following classifiers: ' + JSON.stringify(missingDifficulty),
+        'Missing severity in following classifiers: ' + JSON.stringify(missingSeverity),
       );
     }
 
@@ -140,12 +140,12 @@ export class ClassifierService {
       .getRawMany();
   }
 
-  async getDifficultyStatistics(): Promise<DifficultyStatistics[]> {
+  async getSeverityStatistics(): Promise<SeverityStatistics[]> {
     return await this.classifierRepository
       .createQueryBuilder('classifier')
-      .select('classifier.difficulty', 'difficulty')
+      .select('classifier.severity', 'severity')
       .addSelect('COUNT(*)', 'count')
-      .groupBy('classifier.difficulty')
+      .groupBy('classifier.severity')
       .getRawMany();
   }
 }
